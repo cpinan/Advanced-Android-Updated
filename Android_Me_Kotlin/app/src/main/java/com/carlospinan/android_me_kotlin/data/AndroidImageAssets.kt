@@ -3,6 +3,13 @@ package com.carlospinan.android_me_kotlin.data
 import com.carlospinan.android_me_kotlin.R
 import java.util.*
 
+enum class BodyType {
+    HEAD,
+    BODY,
+    LEG,
+    NONE
+}
+
 val heads = object : ArrayList<Int>() {
     init {
         add(R.drawable.head1)
@@ -59,5 +66,14 @@ val all = object : ArrayList<Int>() {
         addAll(heads)
         addAll(bodies)
         addAll(legs)
+    }
+}
+
+fun resourceType(index: Int): BodyType {
+    return when {
+        index < heads.size -> BodyType.HEAD
+        index >= heads.size && index < (heads.size + bodies.size) -> BodyType.BODY
+        index > heads.size + bodies.size -> BodyType.LEG
+        else -> BodyType.NONE
     }
 }
