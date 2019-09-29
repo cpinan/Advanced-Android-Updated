@@ -1,0 +1,156 @@
+{
+  "project_info": {
+    "project_number": "860966842565",
+    "firebase_url": "https://battle-ship-25977.firebaseio.com",
+    "project_id": "battle-ship-25977",
+    "storage_bucket": "battle-ship-25977.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860966842565:android:062d8405c4f4cdf3",
+        "android_client_info": {
+          "package_name": "com.carlospinan.android.associate.cameraxqrcode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCICWSI376pf1CCGjKxOyrFi-JmzYTy794"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860966842565:android:82b4d384312b43b950c0ac",
+        "android_client_info": {
+          "package_name": "com.carlospinan.androidemojifykotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCICWSI376pf1CCGjKxOyrFi-JmzYTy794"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860966842565:android:dd20f00aecd53bd050c0ac",
+        "android_client_info": {
+          "package_name": "com.example.kotlineverywherecameraxmlkit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCICWSI376pf1CCGjKxOyrFi-JmzYTy794"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860966842565:android:076c2894b83da5e3",
+        "android_client_info": {
+          "package_name": "com.fismobile.mlkit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCICWSI376pf1CCGjKxOyrFi-JmzYTy794"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860966842565:android:b898f277812f5964",
+        "android_client_info": {
+          "package_name": "com.mfoundry.enterprise.mbanking.push"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCICWSI376pf1CCGjKxOyrFi-JmzYTy794"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860966842565-tncoipo9a6l02d34un306aiqkb4dm1ka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
