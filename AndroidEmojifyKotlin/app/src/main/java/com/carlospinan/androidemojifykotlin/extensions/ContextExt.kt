@@ -4,18 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.exifinterface.media.ExifInterface
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.min
+
 
 const val FILE_PROVIDER_AUTHORITY = "com.carlospinan.fileprovider"
 
@@ -48,7 +51,19 @@ fun Context.resamplePic(imagePath: String): Bitmap {
     bmOptions.inJustDecodeBounds = false
     bmOptions.inSampleSize = scaleFactor
 
-    return BitmapFactory.decodeFile(imagePath)
+    val bitmap = BitmapFactory.decodeFile(imagePath)
+    var rotate = 0
+    when (ExifInterface(imagePath).getAttributeInt(
+        ExifInterface.TAG_ORIENTATION,
+        ExifInterface.ORIENTATION_NORMAL
+    )) {
+        ExifInterface.ORIENTATION_ROTATE_270 -> rotate = 270
+        ExifInterface.ORIENTATION_ROTATE_180 -> rotate = 180
+        ExifInterface.ORIENTATION_ROTATE_90 -> rotate = 90
+    }
+    val matrix = Matrix()
+    matrix.postRotate(rotate.toFloat())
+    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
 }
 
 /**

@@ -6,11 +6,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.carlospinan.androidemojifykotlin.extensions.*
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 
 private const val REQUEST_IMAGE_CAPTURE = 1
 private const val REQUEST_STORAGE_PERMISSION = 1
@@ -23,6 +25,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var temporalPhotoPath: String
     private lateinit var resultBitmap: Bitmap
+
+    private val activityJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + activityJob)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-            else -> ""
+            else -> throw IllegalArgumentException("Invalid Argument.")
         }
     }
 
@@ -58,7 +63,9 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             processAndSetImage()
         } else {
-            deleteImageFile(temporalPhotoPath)
+            if (::temporalPhotoPath.isInitialized) {
+                deleteImageFile(temporalPhotoPath)
+            }
         }
     }
 
@@ -74,23 +81,49 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun processAndSetImage() {
+        emojify_button.visibility = View.GONE
+        title_text_view.visibility = View.GONE
+
+        share_button.show()
+        save_button.show()
+        clear_button.show()
+
+        uiScope.launch {
+            progress_bar.visibility = View.VISIBLE
+            withContext(Dispatchers.IO) {
+                resultBitmap = resamplePic(temporalPhotoPath)
+            }
+            image_view.setImageBitmap(resultBitmap)
+            progress_bar.visibility = View.GONE
+        }
 
     }
 
     // CLICK LISTENERS
     private fun clearImage() {
+        image_view.setImageResource(0)
 
+        emojify_button.visibility = View.VISIBLE
+        title_text_view.visibility = View.VISIBLE
+
+        share_button.hide()
+        save_button.hide()
+        clear_button.hide()
     }
 
     private fun saveMe() {
-        deleteImageFile(temporalPhotoPath)
-        saveImage(resultBitmap)
+        if (::temporalPhotoPath.isInitialized) {
+            deleteImageFile(temporalPhotoPath)
+            saveImage(resultBitmap)
+        }
     }
 
     private fun shareMe() {
-        deleteImageFile(temporalPhotoPath)
-        saveImage(resultBitmap)
-        shareImage(temporalPhotoPath)
+        if (::temporalPhotoPath.isInitialized) {
+            deleteImageFile(temporalPhotoPath)
+            saveImage(resultBitmap)
+            shareImage(temporalPhotoPath)
+        }
     }
 
     private fun emojifyMe() {
@@ -99,6 +132,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             askForPermissions(requiredPermissions, REQUEST_STORAGE_PERMISSION)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activityJob.cancel()
     }
 
 }

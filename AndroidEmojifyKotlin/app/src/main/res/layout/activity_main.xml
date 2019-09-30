@@ -13,15 +13,27 @@
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/view_margin"
         android:contentDescription="@string/imageview_description"
         android:scaleType="fitStart"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/title_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/clear_button"
+        tools:src="@drawable/closed_smile" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/title_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clear_button" />
 
     <TextView
         android:id="@+id/title_text_view"
@@ -34,7 +46,7 @@
         app:layout_constraintBottom_toTopOf="@+id/emojify_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/image_view" />
 
     <Button
         android:id="@+id/emojify_button"
@@ -52,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_clear"
-        android:visibility="visible"
+        android:visibility="gone"
         app:backgroundTint="@android:color/white"
         app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +77,7 @@
         android:layout_marginEnd="@dimen/fab_margins"
         android:layout_marginBottom="@dimen/fab_margins"
         android:src="@drawable/ic_save"
-        android:visibility="visible"
+        android:visibility="gone"
         app:backgroundTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -77,7 +89,7 @@
         android:layout_marginStart="@dimen/fab_margins"
         android:layout_marginBottom="@dimen/fab_margins"
         android:src="@drawable/ic_share"
-        android:visibility="visible"
+        android:visibility="gone"
         app:backgroundTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
