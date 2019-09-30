@@ -141,7 +141,7 @@ fun Context.saveImage(image: Bitmap): String? {
     val imageFileName = "JPEG_$timeStamp.jpg"
 
     val storageDir = File(
-        "${this.getExternalFilesDirs(Environment.DIRECTORY_PICTURES)}/Emojify"
+        "${this.filesDir}/Emojify"
 
     )
     var success = true
