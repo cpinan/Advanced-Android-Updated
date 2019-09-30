@@ -9,7 +9,10 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.carlospinan.androidemojifykotlin.extensions.*
+import com.carlospinan.androidemojifykotlin.utils.Emojifier
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -24,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     )
 
     private lateinit var temporalPhotoPath: String
-    private lateinit var resultBitmap: Bitmap
+    private val resultBitmap = MutableLiveData<Bitmap>()
 
     private val activityJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + activityJob)
@@ -36,6 +39,18 @@ class MainActivity : AppCompatActivity() {
         save_button.setOnClickListener { saveMe() }
         clear_button.setOnClickListener { clearImage() }
         share_button.setOnClickListener { shareMe() }
+
+        resultBitmap.observe(
+            this,
+            Observer {
+                image_view.setImageBitmap(it)
+                progress_bar.visibility = View.GONE
+
+                share_button.show()
+                save_button.show()
+                clear_button.show()
+            }
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -84,17 +99,15 @@ class MainActivity : AppCompatActivity() {
         emojify_button.visibility = View.GONE
         title_text_view.visibility = View.GONE
 
-        share_button.show()
-        save_button.show()
-        clear_button.show()
-
         uiScope.launch {
             progress_bar.visibility = View.VISIBLE
             withContext(Dispatchers.IO) {
-                resultBitmap = resamplePic(temporalPhotoPath)
+                Emojifier.detectFaces(
+                    this@MainActivity,
+                    resamplePic(temporalPhotoPath),
+                    resultBitmap
+                )
             }
-            image_view.setImageBitmap(resultBitmap)
-            progress_bar.visibility = View.GONE
         }
 
     }
@@ -114,14 +127,14 @@ class MainActivity : AppCompatActivity() {
     private fun saveMe() {
         if (::temporalPhotoPath.isInitialized) {
             deleteImageFile(temporalPhotoPath)
-            saveImage(resultBitmap)
+            saveImage(resultBitmap.value!!)
         }
     }
 
     private fun shareMe() {
         if (::temporalPhotoPath.isInitialized) {
             deleteImageFile(temporalPhotoPath)
-            saveImage(resultBitmap)
+            saveImage(resultBitmap.value!!)
             shareImage(temporalPhotoPath)
         }
     }
