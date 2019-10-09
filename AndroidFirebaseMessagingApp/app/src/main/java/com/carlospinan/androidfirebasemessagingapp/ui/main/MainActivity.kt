@@ -2,8 +2,10 @@ package com.carlospinan.androidfirebasemessagingapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +18,8 @@ import com.carlospinan.androidfirebasemessagingapp.data.repository.database.Squa
 import com.carlospinan.androidfirebasemessagingapp.data.repository.database.createSelectionForCurrentFollowers
 import com.carlospinan.androidfirebasemessagingapp.ui.following.FollowingPreferenceActivity
 import com.carlospinan.androidfirebasemessagingapp.ui.main.adapter.SquawkAdapter
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +58,22 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(it)
             }
         )
+
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FBASE", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+
+                // Log and toast
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d("FBASE", msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

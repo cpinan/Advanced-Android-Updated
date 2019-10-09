@@ -34,5 +34,7 @@
 
     <string name="follow_summary_not_following">Not Following</string>
     <string name="follow_summary_following">Following</string>
+    <string name="default_notification_channel_id">bobby_channel</string>
+    <string name="msg_token_fmt">Message Token FMT %1$s</string>
 
 </resources>
