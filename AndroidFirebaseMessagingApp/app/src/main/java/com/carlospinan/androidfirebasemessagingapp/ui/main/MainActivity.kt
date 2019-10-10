@@ -13,13 +13,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.carlospinan.androidfirebasemessagingapp.R
 import com.carlospinan.androidfirebasemessagingapp.data.repository.SquawkRepository
 import com.carlospinan.androidfirebasemessagingapp.data.repository.database.SquawkDatabase
-import com.carlospinan.androidfirebasemessagingapp.data.repository.database.createSelectionForCurrentFollowers
 import com.carlospinan.androidfirebasemessagingapp.ui.following.FollowingPreferenceActivity
 import com.carlospinan.androidfirebasemessagingapp.ui.main.adapter.SquawkAdapter
 import com.google.android.gms.tasks.OnCompleteListener
@@ -54,12 +52,7 @@ class MainActivity : AppCompatActivity() {
         )
         squawks_recycler_view.adapter = adapter
 
-        viewModel.squawksFromAuthors(
-            createSelectionForCurrentFollowers(
-                resources,
-                PreferenceManager.getDefaultSharedPreferences(this)
-            )
-        ).observe(
+        viewModel.squawk.observe(
             this,
             Observer {
                 adapter.submitList(it)
@@ -78,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
                 // Log and toast
                 val msg = getString(R.string.msg_token_fmt, token)
-                Log.d("FBASE", msg)
+                Log.d("FBASE", "MAIN ACT - $msg")
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             })
     }

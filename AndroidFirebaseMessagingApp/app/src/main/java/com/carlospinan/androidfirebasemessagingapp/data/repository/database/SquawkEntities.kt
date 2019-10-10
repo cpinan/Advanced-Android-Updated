@@ -11,5 +11,5 @@ data class Squawk(
     @NonNull val author: String,
     @NonNull val authorKey: String,
     @NonNull val message: String,
-    @NonNull val date: Int
+    @NonNull val date: Long
 )

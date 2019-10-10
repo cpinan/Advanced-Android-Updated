@@ -9,6 +9,8 @@ class MainActivityViewModel(
     private val repository: SquawkRepository
 ) : ViewModel() {
 
+    val squawk: LiveData<List<Squawk>> = repository.getSquawk()
+
     fun squawksFromAuthors(authorKeys: String): LiveData<List<Squawk>> {
         return repository.getSquawkFromAuthorKeys(authorKeys)
     }

@@ -8,6 +8,10 @@ class SquawkRepository(
     private val dao: SquawkDao
 ) {
 
+    fun getSquawk(): LiveData<List<Squawk>> {
+        return dao.getSquawks()
+    }
+
     fun getSquawkFromAuthorKeys(authorKeys: String): LiveData<List<Squawk>> {
         return dao.getSquawkFromAuthorKeys(authorKeys)
     }

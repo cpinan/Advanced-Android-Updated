@@ -40,13 +40,15 @@
             android:name=".ui.following.FollowingPreferenceActivity"
             android:parentActivityName=".ui.main.MainActivity" />
 
+        <!-- Service listening for any incoming messages -->
         <service
-            android:name=".data.repository.network.FirebaseInstanceIdService"
+            android:name=".data.repository.network.SquawkFirebaseMessageService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
     </application>
 
 </manifest>
