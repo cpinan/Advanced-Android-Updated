@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull
 @Entity(
     tableName = "place"
 )
-data class Place(
+data class ShushPlace(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @NotNull val placeId: Long
 )

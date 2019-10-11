@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.carlospinan.androidshushme.R
-import com.carlospinan.androidshushme.data.entities.Place
+import com.carlospinan.androidshushme.data.entities.ShushPlace
 
-class PlacesDiffCallback : DiffUtil.ItemCallback<Place>() {
+class PlacesDiffCallback : DiffUtil.ItemCallback<ShushPlace>() {
 
-    override fun areItemsTheSame(oldItem: Place, newItem: Place): Boolean {
+    override fun areItemsTheSame(oldItem: ShushPlace, newItem: ShushPlace): Boolean {
         return oldItem.placeId == newItem.placeId
     }
 
-    override fun areContentsTheSame(oldItem: Place, newItem: Place): Boolean {
+    override fun areContentsTheSame(oldItem: ShushPlace, newItem: ShushPlace): Boolean {
         return oldItem == newItem
     }
 
 }
 
-class PlacesListAdapter : ListAdapter<Place, PlacesListAdapter.ViewHolder>(PlacesDiffCallback()) {
+class PlacesListAdapter : ListAdapter<ShushPlace, PlacesListAdapter.ViewHolder>(PlacesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

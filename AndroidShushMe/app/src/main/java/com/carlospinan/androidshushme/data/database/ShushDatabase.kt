@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.carlospinan.androidshushme.data.entities.Place
+import com.carlospinan.androidshushme.data.entities.ShushPlace
 
 @Database(
     exportSchema = false,
     version = 1,
-    entities = [Place::class]
+    entities = [ShushPlace::class]
 )
 abstract class ShushDatabase : RoomDatabase() {
 

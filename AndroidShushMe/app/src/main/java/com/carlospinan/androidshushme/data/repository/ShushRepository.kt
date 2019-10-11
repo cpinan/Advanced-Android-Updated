@@ -2,25 +2,30 @@ package com.carlospinan.androidshushme.data.repository
 
 import androidx.lifecycle.LiveData
 import com.carlospinan.androidshushme.data.database.ShushDao
-import com.carlospinan.androidshushme.data.entities.Place
+import com.carlospinan.androidshushme.data.entities.ShushPlace
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ShushRepository(
     private val shushDao: ShushDao
 ) {
 
-    fun addPlace(place: Place) {
-        shushDao.insertPlace(place)
+    val allPlaces: LiveData<List<ShushPlace>> = shushDao.getAllPlaces()
+
+    fun addPlace(shushPlace: ShushPlace) {
+        GlobalScope.launch(Dispatchers.IO) {
+            shushDao.insertPlace(shushPlace)
+        }
     }
 
-    fun updatePlace(place: Place) {
-        shushDao.updatePlace(place)
+    fun updatePlace(shushPlace: ShushPlace) {
+        GlobalScope.launch(Dispatchers.IO) {
+            shushDao.updatePlace(shushPlace)
+        }
     }
 
-    fun getAllPlaces(): LiveData<List<Place>> {
-        return shushDao.getAllPlaces()
-    }
-
-    fun getFilteredPlaces(placeId: Int): LiveData<List<Place>> {
+    fun getFilteredPlaces(placeId: Int): LiveData<List<ShushPlace>> {
         return shushDao.getFilteredPlaces(placeId)
     }
 
