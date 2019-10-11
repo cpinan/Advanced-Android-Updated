@@ -51,6 +51,37 @@
         app:layout_constraintStart_toEndOf="@id/globe_image_view"
         app:layout_constraintTop_toTopOf="@id/globe_image_view" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/location_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dimen4"
+        android:paddingRight="@dimen/dimen8"
+        android:paddingBottom="@dimen/dimen4"
+        android:src="@drawable/ic_my_location_primary_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/globe_image_view" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/location_label_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen4"
+        android:text="@string/location_permissions"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintStart_toEndOf="@id/location_image_view"
+        app:layout_constraintTop_toTopOf="@id/location_image_view" />
+
+    <CheckBox
+        android:id="@+id/location_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/location_label_view"
+        app:layout_constraintTop_toTopOf="@id/location_image_view" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_location_button"
         android:layout_width="0dp"
@@ -62,7 +93,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/globe_image_view" />
+        app:layout_constraintTop_toBottomOf="@id/location_image_view" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/location_text_view"
