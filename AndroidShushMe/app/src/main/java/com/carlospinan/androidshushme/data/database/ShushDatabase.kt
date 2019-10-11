@@ -8,7 +8,7 @@ import com.carlospinan.androidshushme.data.entities.ShushPlace
 
 @Database(
     exportSchema = false,
-    version = 1,
+    version = 3,
     entities = [ShushPlace::class]
 )
 abstract class ShushDatabase : RoomDatabase() {

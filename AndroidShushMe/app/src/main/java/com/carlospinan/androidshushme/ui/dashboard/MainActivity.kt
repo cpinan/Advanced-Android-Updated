@@ -2,14 +2,15 @@ package com.carlospinan.androidshushme.ui.dashboard
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.carlospinan.androidshushme.R.layout
-import com.carlospinan.androidshushme.R.string
+import com.carlospinan.androidshushme.R
+import com.carlospinan.androidshushme.data.Geofencing
 import com.carlospinan.androidshushme.data.database.ShushDatabase
 import com.carlospinan.androidshushme.data.entities.ShushPlace
 import com.carlospinan.androidshushme.data.repository.ShushRepository
@@ -24,6 +25,7 @@ import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.Places
 import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 /**
  * https://console.cloud.google.com/apis/credentials/key/57becc73-d9cc-4507-b9f3-f25235b2be67?project=theta-signal-186019
@@ -66,13 +68,14 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
         Manifest.permission.ACCESS_COARSE_LOCATION
     ).toTypedArray()
 
-    private val addedPlacesList = mutableListOf<ShushPlace>()
+    private var switchEnabled = false
     private lateinit var adapter: PlacesListAdapter
     private lateinit var repository: ShushRepository
+    private lateinit var geofencing: Geofencing
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         createGoogleApiClient()
 
@@ -96,36 +99,62 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
             onAddPlaceButtonClicked()
         }
 
+        switchEnabled = getPreferences(Context.MODE_PRIVATE).getBoolean(
+            getString(R.string.setting_enabled),
+            false
+        )
+        enable_switch.isChecked = switchEnabled
+        enable_switch.setOnCheckedChangeListener { _, isChecked ->
+            val editor = getPreferences(Context.MODE_PRIVATE).edit()
+            editor.putBoolean(getString(R.string.setting_enabled), isChecked)
+            switchEnabled = isChecked
+            editor.commit()
+            if (switchEnabled) {
+                geofencing.registerAllGeofences()
+            } else {
+                geofencing.unregisterAllGeofences()
+            }
+        }
+
         repository.allPlaces.observe(
             this,
             Observer {
                 adapter.submitList(it)
+                geofencing.updateGeofenceList(it)
+                if (switchEnabled) {
+                    geofencing.registerAllGeofences()
+                }
             }
         )
 
     }
 
     private fun createGoogleApiClient() {
-        GoogleApiClient.Builder(this)
+        val googleApiClient = GoogleApiClient.Builder(this)
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this)
             .addApi(LocationServices.API)
             .addApi(Places.GEO_DATA_API)
             .enableAutoManage(this, this)
             .build()
+
+        geofencing = Geofencing(
+            googleApiClient,
+            this
+        )
     }
 
     private fun onAddPlaceButtonClicked() {
         if (!arePermissionsGranted(permissions)) {
             Toast.makeText(
                 this,
-                string.need_location_permission_message,
+                R.string.need_location_permission_message,
                 Toast.LENGTH_LONG
             ).show()
         } else {
             Toast.makeText(
                 this,
-                string.location_permissions_granted_message,
+                R.string.location_permissions_granted_message,
                 Toast.LENGTH_LONG
             ).show()
 
@@ -182,8 +211,12 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
                 if (place != null) {
                     repository.addPlace(
                         ShushPlace(
-                            0,
-                            place.hashCode().toLong()
+                            id = 0,
+                            name = place.name.toString(),
+                            latitude = place.latLng.latitude,
+                            longitude = place.latLng.longitude,
+                            placeId = place.id,
+                            address = place.address.toString()
                         )
                     )
                 } else {
@@ -193,17 +226,5 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
         }
     }
 
-    // TEST PLACE 2.0
-    // https://developers.google.com/places/android-sdk/place-id
-    fun test() {
-        // Initialize the SDK
-        com.google.android.libraries.places.api.Places.initialize(
-            applicationContext, resources.getString(
-                string.google_maps_api_key
-            )
-        )
 
-        // Create a new Places client instance
-        val placesClient = com.google.android.libraries.places.api.Places.createClient(this)
-    }
 }

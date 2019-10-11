@@ -22,7 +22,8 @@ class PlacesDiffCallback : DiffUtil.ItemCallback<ShushPlace>() {
 
 }
 
-class PlacesListAdapter : ListAdapter<ShushPlace, PlacesListAdapter.ViewHolder>(PlacesDiffCallback()) {
+class PlacesListAdapter :
+    ListAdapter<ShushPlace, PlacesListAdapter.ViewHolder>(PlacesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -33,8 +34,8 @@ class PlacesListAdapter : ListAdapter<ShushPlace, PlacesListAdapter.ViewHolder>(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         with(holder) {
-            nameTextView.text = item.placeId.toString()
-            addressTextView.text = item.placeId.toString()
+            nameTextView.text = item.name
+            addressTextView.text = item.address
         }
     }
 

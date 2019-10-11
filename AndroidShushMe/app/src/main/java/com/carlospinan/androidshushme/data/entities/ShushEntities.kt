@@ -9,5 +9,9 @@ import org.jetbrains.annotations.NotNull
 )
 data class ShushPlace(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @NotNull val placeId: Long
+    @NotNull val placeId: String,
+    @NotNull val latitude: Double,
+    @NotNull val longitude: Double,
+    @NotNull val name: String,
+    @NotNull val address: String
 )

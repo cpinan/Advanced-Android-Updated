@@ -1,8 +1,10 @@
 package com.carlospinan.androidshushme.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.carlospinan.androidshushme.data.database.ShushDao
 import com.carlospinan.androidshushme.data.entities.ShushPlace
+import com.google.android.gms.location.places.Place
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
